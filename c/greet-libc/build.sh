@@ -5,12 +5,14 @@ set -x
 
 mkdir -p build
 
-# Split compile/link so -O1 doesn't trigger wasm-opt at link time.
+# We build and link separately so we can compile with optimizations without
+# invoking binaryen (which is annoyingly activated by default and chokes on
+# components).
 clang -c -O1 -target wasm32-wasip2 --sysroot=../../_sysroot \
   greet.c -o build/greet.o
 clang -target wasm32-wasip2 --sysroot=../../_sysroot \
   -mexec-model=reactor \
-  -Wl,--no-entry -Wl,--export-all \
+  -Wl,--no-entry \
   -Wl,--component-type,greet.wit \
   build/greet.o -o build/greet.wasm
 

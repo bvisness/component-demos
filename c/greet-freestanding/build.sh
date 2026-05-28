@@ -11,7 +11,7 @@ mkdir -p build
 clang -c -O1 -target wasm32-wasip2 \
   greet.c -o build/greet.o
 clang -nostdlib -target wasm32-wasip2 \
-  -Wl,--no-entry -Wl,--export-all \
+  -Wl,--no-entry \
   -Wl,--component-type,greet.wit \
   build/greet.o -o build/greet.wasm
 
