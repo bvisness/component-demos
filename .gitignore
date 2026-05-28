@@ -1,1 +1,4 @@
 build/
+rust/**/target/
+c/**/bindings/
+_sysroot
